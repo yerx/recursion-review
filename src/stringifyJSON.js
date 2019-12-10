@@ -14,23 +14,30 @@ var stringifyJSON = function(obj) {
   }
 
   if (obj !== null && typeof obj === 'object') {
-    console.log("here");
    if(Object.keys(obj).length === 0) {
      return '{}';
    }
 
    var result = [];
 
-   var objectKeys = Object.keys(obj);
-
-   for(var k = 0; k < objectKeys.length; k++) {
-     result.push(stringifyJSON(objectKeys[k]) + ':' + stringifyJSON(obj[objectKeys[k]]));
-     console.log(result)
+   for (var key in obj) {
+    if(obj[key] === undefined || typeof obj[key] === 'function') {
+      continue;
+    }
+    result.push(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
    }
+
+  //  var objectKeys = Object.keys(obj);
+
+  //  for(var k = 0; k < objectKeys.length; k++) {
+  //   if(objectKeys[k] === undefined || typeof objectKeys[k] === 'function') {
+  //     continue;
+  //   }
+  //    result.push(stringifyJSON(objectKeys[k]) + ':' + stringifyJSON(obj[objectKeys[k]]));
+  //  }
 
    return "{" + result + "}";
   }
-
 
   if(typeof obj === 'string') {
     return '"' + obj + '"';
